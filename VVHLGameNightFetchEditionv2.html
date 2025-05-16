@@ -6,25 +6,24 @@
     <title>VVHL Game Night</title>
     <style>
         :root {
-            --page-bg: #2c3e50;
-            --container-bg: #34495e;
-            --text-color: #ecf0f1;
-            --border-color: #7f8c8d;
-            --accent-color: #3498db;
-            --card-header-bg: #4a6278;
-            --error-color: #e74c3c;
-            --success-color: #2ecc71;
-            --placeholder-color: #bdc3c7;
-        }
+            --vvhl-dark-blue: #102A43;       /* Example: A deep, slightly desaturated navy/slate */
+            --vvhl-medium-cyan: #00A8C6;   /* Example: A vibrant cyan/teal for accents */
+			--vvhl-light-cyan: #A0D2DB;    /* Example: A lighter, softer cyan for highlights/borders */
+			--vvhl-ice-white: #F0F4F8;     /* Example: An off-white for text */
+			--vvhl-text-on-accent: #0A1928; /* Dark text for on top of medium-cyan if needed */
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--page-bg);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            font-size: 14px;
-        }
+			/* --- Mapping to existing variables --- */
+			--page-bg: var(--vvhl-dark-blue);         /* Main page background */
+			--container-bg: #1C3750; /* Slightly lighter than page-bg for main content area */
+			--text-color: var(--vvhl-ice-white);        /* Primary text color */
+			--border-color: var(--vvhl-light-cyan);     /* Borders for cards, tabs */
+			--accent-color: var(--vvhl-medium-cyan);    /* Buttons, active tabs, highlights */
+			--card-header-bg: #294D69; /* A darker shade within the container for card headers */
+    
+			--error-color: #e74c3c; /* Keep standard error red, or pick a contrasting alert color */
+			--success-color: #2ecc71; /* Keep standard success green */
+			--placeholder-color: #9FB3C8; /* Lighter text for placeholders, derived from scheme */
+		}
 
         .container {
             max-width: 1600px;
@@ -35,32 +34,55 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap'); /* Replace with your font */
+
         .main-title-container {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            align-items: center; /* Vertically align items */
+            justify-content: space-between; /* Distribute space */
             margin-bottom: 20px;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color); /* Existing divider */
             padding-bottom: 15px;
+            position: relative; /* For absolute positioning of logos if needed, but flex might be enough */
+            height: 100px; /* Example height, adjust as needed */
         }
 
-        .league-logo {
-            height: 50px;
-            width: 50px;
-            margin-right: 15px;
+        .flanking-logo { /* New class for the two main logos */
+            height: 90%; /* Make it almost fill the container height */
+            max-height: 80px; /* Max size to prevent it being too huge */
+            width: auto;    /* Maintain aspect ratio */
+            object-fit: contain;
+        }
+
+        .flanking-logo.left {
+            margin-right: 20px; /* Space between logo and title */
+        }
+        .flanking-logo.right {
+            margin-left: 20px; /* Space between title and logo */
         }
 
         .main-title {
-            font-size: 2.5em;
-            font-weight: bold;
+            font-family: "Permanent Marker", cursive; /* Your chosen Google Font */
+            font-size: 3.5em; /* Adjust to fill space */
+            font-weight: 400; /* Example: make it bold, depends on font availability */
+			font-style: normal;
             text-align: center;
-            background: linear-gradient(135deg, #f39c12, #e74c3c, #9b59b6, #3498db);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            -webkit-text-stroke: 0.5px #ffffffaa;
+            flex-grow: 1; /* Allow title to take up available space */
+            /* Gradient from VVHL Logo - EXAMPLE COLORS, REPLACE THESE */
+            background: linear-gradient(135deg, var(#00A8C6), var(#A0D2DB), var(#F0F4F8)); 
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+			-webkit-text-stroke: 0.5px var(#F0F4F8); /* Or a light gray from your scheme */ 
             padding: 5px 0;
+            line-height: 1.1; /* Adjust for better vertical centering if font is tall */
         }
+        
+        /* To adjust the main title container's bottom border to be before the status messages */
+        #dataFetchStatusContainer {
+            margin-top: 15px; /* Add some space above status messages */
+        }
+
 
         .main-tabs-nav { display: flex; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
         .main-tab-button { padding: 10px 20px; cursor: pointer; border: none; background-color: transparent; color: var(--text-color); font-size: 1.1em; border-bottom: 3px solid transparent; transition: all 0.3s ease; }
@@ -130,10 +152,15 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    div class="container">
         <div class="main-title-container">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIgZmlsbD0iZ3JheSIvPjxwYXRoIGZpbGw9IndoaXRlIiBkPSJNOS41IDE1LjVMMTMuNSA5LjUgTDE1IDEzWiIgLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI2IiBmaWxsPSJibGFjayI+VlZITDwvdGV4dD48L3N2Zz4=" alt="League Logo" class="league-logo" id="leagueLogo">
+            <!-- Left Logo -->
+            <img src="https://raw.githubusercontent.com/WAXPOETlC/vvhl-game-night-tool/main/logos/vvhl.png" alt="League Logo Left" class="league-logo flanking-logo left">
+            
             <h1 class="main-title">VVHL Game Night</h1>
+
+            <!-- Right Logo -->
+            <img src="https://raw.githubusercontent.com/WAXPOETlC/vvhl-game-night-tool/main/logos/vvhl.png" alt="League Logo Right" class="league-logo flanking-logo right">
         </div>
 
         <div id="dataFetchStatusContainer">
@@ -579,61 +606,185 @@
     // IMPORTANT: Populate this with ALL your players.
     // 'name' should match 'Username' from stats sheets. 'teamId' should be numerical.
     // 'role', 'draftRound', 'isECU', 'twitch' should be accurate.
-    let staticPlayersData = [
-        // VVHL Angry Byrds (ID: "6330")
-        { name: "NihilisticYeti", playerId: "PLAYERID_NihilisticYeti", teamId: "6330", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "part time", draftPick: 8, draftRound: 1, role: null, isECU: false, twitch: null },
-        { name: "Mattattack4072", playerId: "PLAYERID_Mattattack4072", teamId: "6330", primaryPosition: "G", secondaryPosition: "C", goaliePreference: "full time", draftPick: 21, draftRound: 2, role: null, isECU: false, twitch: null },
-        { name: "BulkyMicrobe", playerId: "PLAYERID_BulkyMicrobe", teamId: "6330", primaryPosition: "G", secondaryPosition: "C", goaliePreference: "full time", draftPick: 36, draftRound: 3, role: null, isECU: false, twitch: null },
-        { name: "Gage0906", playerId: "PLAYERID_Gage0906", teamId: "6330", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 49, draftRound: 4, role: null, isECU: false, twitch: null },
-        { name: "Phoenix1381", playerId: "PLAYERID_Phoenix1381", teamId: "6330", primaryPosition: "D", secondaryPosition: "W", goaliePreference: "part time", draftPick: 64, draftRound: 5, role: null, isECU: false, twitch: null },
-        { name: "Itz_Nitro71-TTV", playerId: "PLAYERID_Itz_Nitro71-TTV", teamId: "6330", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 77, draftRound: 6, role: null, isECU: false, twitch: null },
-        { name: "jaybyrd04", playerId: "PLAYERID_jaybyrd04", teamId: "6330", role: "Owner", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
-        { name: "InfiniteMadness3", playerId: "PLAYERID_InfiniteMadness3", teamId: "6330", role: "GM", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
+    // --- STATIC DATA (Hardcoded) ---
+// IMPORTANT: teamsData must be defined before staticPlayersData and use numerical IDs
+const teamsData = [ // Copied from previous response, ensure your logos/colors are filled
+    { id: "6330", name: "VVHL Angry Byrds", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_6330_LOGO.png", primaryColor: "#FF0000", secondaryColor: "#000000", owner: "jaybyrd04", gm: "InfiniteMadness3" },
+    { id: "925", name: "VVHL Blue Dragons", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_925_LOGO.png", primaryColor: "#0000FF", secondaryColor: "#FFFFFF", owner: "l Setty l", gm: "Carney l94l" },
+    { id: "122924", name: "VVHL Flying Dutchmen", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_122924_LOGO.png", primaryColor: "#FFA500", secondaryColor: "#000080", owner: "MineHeart--", gm: "Stafano99" },
+    { id: "177596", name: "VVHL Hangry Moose", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_177596_LOGO.png", primaryColor: "#A0522D", secondaryColor: "#006400", owner: "Squad86lemm", gm: "BigTRUCK20" },
+    { id: "124443", name: "VVHL Himmytown Huskies", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_124443_LOGO.png", primaryColor: "#ADD8E6", secondaryColor: "#808080", owner: "Taylz7", gm: "EKMetal" },
+    { id: "192462", name: "VVHL Lost Boys", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_192462_LOGO.png", primaryColor: "#008000", secondaryColor: "#FFFF00", owner: "SuPeRmArIoTa15", gm: "Theone-iso" },
+    { id: "148983", name: "VVHL Philly Cheeseskates", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_148983_LOGO.png", primaryColor: "#FFC0CB", secondaryColor: "#FFA500", owner: "SadAttorney", gm: "GwHitTs MF" },
+    { id: "195310", name: "VVHL Sewer Kings", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_195310_LOGO.png", primaryColor: "#808080", secondaryColor: "#00FF00", owner: "lXlBMac24lXl", gm: "showstopr87" },
+    { id: "2411", name: "VVHL Sicilian Slicers", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_2411_LOGO.png", primaryColor: "#DC143C", secondaryColor: "#000000", owner: "x3xhoagiex0x", gm: "Buckneison" },
+    { id: "197685", name: "VVHL Southbeach Snipers", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_197685_LOGO.png", primaryColor: "#00FFFF", secondaryColor: "#FF69B4", owner: "oi Caustic", gm: "Biz l16l" },
+    { id: "24504", name: "VVHL Tampa Bay Tribe", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_24504_LOGO.png", primaryColor: "#FFD700", secondaryColor: "#4B0082", owner: "JG813", gm: "MikeyPT4899" },
+    { id: "195791", name: "VVHL Bravehearts", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_195791_LOGO.png", primaryColor: "#00008B", secondaryColor: "#FFD700", owner: "T8kEITEzZz", gm: "ItsJayno" },
+    { id: "192189", name: "VVHL Degenerates", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_192189_LOGO.png", primaryColor: "#8B0000", secondaryColor: "#D3D3D3", owner: "MarkyMarccc", gm: "NotLuigi420" },
+    { id: "109941", name: "VVHL Portage Moneyshots", logoUrl: "YOUR_RAW_GITHUB_URL_FOR_TEAM_109941_LOGO.png", primaryColor: "#800080", secondaryColor: "#FFFF00", owner: "Jessejen", gm: "Shockedust" }
+];
 
-        // VVHL Blue Dragons (ID: "925")
-        { name: "EzDunk", playerId: "PLAYERID_EzDunk", teamId: "925", primaryPosition: "G", secondaryPosition: "G", goaliePreference: "full time", draftPick: 2, draftRound: 1, role: null, isECU: false, twitch: null },
-        { name: "Octodaddy94", playerId: "PLAYERID_Octodaddy94", teamId: "925", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 27, draftRound: 2, role: null, isECU: false, twitch: null },
-        { name: "OviTheGr8_GOAT", playerId: "PLAYERID_OviTheGr8_GOAT", teamId: "925", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 42, draftRound: 3, role: null, isECU: false, twitch: null },
-        { name: "WHYAMISORAW", playerId: "PLAYERID_WHYAMISORAW", teamId: "925", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 55, draftRound: 4, role: null, isECU: false, twitch: null },
-        { name: "Kooksy L27L", playerId: "PLAYERID_Kooksy_L27L", teamId: "925", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 58, draftRound: 5, role: null, isECU: false, twitch: null },
-        { name: "x53ct10n8x", playerId: "PLAYERID_x53ct10n8x", teamId: "925", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "part time", draftPick: 70, draftRound: 5, role: null, isECU: false, twitch: null },
-        { name: "l Setty l", playerId: "PLAYERID_l_Setty_l", teamId: "925", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: null, draftRound: null, role: "Owner", isECU: false, twitch: null },
-        { name: "Carney l94l", playerId: "PLAYERID_Carney_l94l", teamId: "925", primaryPosition: "D", secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, role: "GM", isECU: false, twitch: null },
+// FULL staticPlayersData - PLEASE REVIEW AND COMPLETE MISSING INFO (playerId, twitch, verify roles/positions)
+let staticPlayersData = [
+    // VVHL Angry Byrds (ID: "6330")
+    { name: "NihilisticYeti", playerId: "PLAYERID_NihilisticYeti", teamId: "6330", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "part time", draftPick: 8, role: null, isECU: false, twitch: null },
+    { name: "Mattattack4072", playerId: "PLAYERID_Mattattack4072", teamId: "6330", primaryPosition: "G", secondaryPosition: "C", goaliePreference: "full time", draftPick: 21, role: null, isECU: false, twitch: null },
+    { name: "BulkyMicrobe", playerId: "PLAYERID_BulkyMicrobe", teamId: "6330", primaryPosition: "G", secondaryPosition: "C", goaliePreference: "full time", draftPick: 36, role: null, isECU: false, twitch: null },
+    { name: "Gage0906", playerId: "PLAYERID_Gage0906", teamId: "6330", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 49, role: null, isECU: false, twitch: null },
+    { name: "Phoenix1381", playerId: "PLAYERID_Phoenix1381", teamId: "6330", primaryPosition: "D", secondaryPosition: "W", goaliePreference: "part time", draftPick: 64, role: null, isECU: false, twitch: null },
+    { name: "Itz_Nitro71-TTV", playerId: "PLAYERID_Itz_Nitro71-TTV", teamId: "6330", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 77, role: null, isECU: false, twitch: null },
+    { name: "jaybyrd04", playerId: "PLAYERID_jaybyrd04", teamId: "6330", role: "Owner", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
+    { name: "InfiniteMadness3", playerId: "PLAYERID_InfiniteMadness3", teamId: "6330", role: "GM", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
 
-        // VVHL Flying Dutchmen (ID: "122924")
-        { name: "Vynnerganson13", playerId: "PLAYERID_Vynnerganson13", teamId: "122924", primaryPosition: "G", secondaryPosition: "W", goaliePreference: "full time", draftPick: 4, draftRound: 1, role: null, isECU: false, twitch: null },
-        { name: "Dmb Dex225", playerId: "PLAYERID_Dmb_Dex225", teamId: "122924", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 25, draftRound: 2, role: null, isECU: false, twitch: null },
-        { name: "Krehzii", playerId: "PLAYERID_Krehzii", teamId: "122924", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 32, draftRound: 3, role: null, isECU: false, twitch: null },
-        { name: "BubbA-HasH-", playerId: "PLAYERID_BubbA-HasH-", teamId: "122924", primaryPosition: "W", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 53, draftRound: 4, role: null, isECU: false, twitch: null },
-        { name: "xWiggetyx", playerId: "PLAYERID_xWiggetyx", teamId: "122924", primaryPosition: "D", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 60, draftRound: 5, role: null, isECU: false, twitch: null },
-        { name: "PapaPalpatine79", playerId: "PLAYERID_PapaPalpatine79", teamId: "122924", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 81, draftRound: 6, role: null, isECU: false, twitch: null }, // Also an Owner in teamsData, confirm if this is his player entry
-        { name: "MineHeart--", playerId: "PLAYERID_MineHeart--", teamId: "122924", primaryPosition: "D", secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, role: "Owner", isECU: false, twitch: null }, // Name reconciled
-        { name: "Stafano99", playerId: "PLAYERID_Stafano99", teamId: "122924", role: "GM", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
+    // VVHL Blue Dragons (ID: "925")
+    { name: "EzDunk", playerId: "PLAYERID_EzDunk", teamId: "925", primaryPosition: "G", secondaryPosition: "G", goaliePreference: "full time", draftPick: 2, role: null, isECU: false, twitch: null },
+    { name: "Octodaddy94", playerId: "PLAYERID_Octodaddy94", teamId: "925", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 27, role: null, isECU: false, twitch: null },
+    { name: "OviTheGr8_GOAT", playerId: "PLAYERID_OviTheGr8_GOAT", teamId: "925", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 42, role: null, isECU: false, twitch: null },
+    { name: "WHYAMISORAW", playerId: "PLAYERID_WHYAMISORAW", teamId: "925", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 55, role: null, isECU: false, twitch: null },
+    { name: "Kooksy L27L", playerId: "PLAYERID_Kooksy_L27L", teamId: "925", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 58, role: null, isECU: false, twitch: null },
+    { name: "x53ct10n8x", playerId: "PLAYERID_x53ct10n8x", teamId: "925", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "part time", draftPick: 70, role: null, isECU: false, twitch: null },
+    { name: "l Setty l", playerId: "PLAYERID_l_Setty_l", teamId: "925", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: null, draftRound: null, role: "Owner", isECU: false, twitch: null }, // O/GM, assign playing pos if applicable
+    { name: "Carney l94l", playerId: "PLAYERID_Carney_l94l", teamId: "925", primaryPosition: "D", secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, role: "GM", isECU: false, twitch: null }, // O/GM, assign playing pos if applicable
 
-        // ... (CONTINUE THIS PATTERN FOR ALL 14 TEAMS AND ALL THEIR PLAYERS, INCLUDING OWNERS/GMS)
-        // ... ENSURE PlayerIDs are unique if you know them, or use a placeholder like "PLAYERID_Gamertag" ensuring uniqueness
-        // ... Correct player names to match your provided stats list
-        // ... Assign 'role' to Owners/GMs, and if they also play, keep their playing positions
-        // Example for a player who is also GM:
-        // { name: "BigTRUCK20", playerId: "PLAYERID_BigTRUCK20", teamId: "177596", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: (HisDraftPickIfAny), draftRound: (HisDraftRoundIfAny), role: "GM", isECU: false, twitch: null },
-    ];
+    // VVHL Flying Dutchmen (ID: "122924")
+    { name: "Vynnerganson13", playerId: "PLAYERID_Vynnerganson13", teamId: "122924", primaryPosition: "G", secondaryPosition: "W", goaliePreference: "full time", draftPick: 4, role: null, isECU: false, twitch: null },
+    { name: "Dmb Dex225", playerId: "PLAYERID_Dmb_Dex225", teamId: "122924", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 25, role: null, isECU: false, twitch: null },
+    { name: "Krehzii", playerId: "PLAYERID_Krehzii", teamId: "122924", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 32, role: null, isECU: false, twitch: null },
+    { name: "BubbA-HasH-", playerId: "PLAYERID_BubbA-HasH-", teamId: "122924", primaryPosition: "W", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 53, role: null, isECU: false, twitch: null }, // Reconciled name
+    { name: "xWiggetyx", playerId: "PLAYERID_xWiggetyx", teamId: "122924", primaryPosition: "D", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 60, role: null, isECU: false, twitch: null },
+    { name: "PapaPalpatine79", playerId: "PLAYERID_PapaPalpatine79", teamId: "122924", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 81, role: null, isECU: false, twitch: null }, // Also Owner in teamsData
+    { name: "MineHeart--", playerId: "PLAYERID_MineHeart--", teamId: "122924", primaryPosition: "D", secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, role: "Owner", isECU: false, twitch: null }, // Reconciled name & role
+    { name: "Stafano99", playerId: "PLAYERID_Stafano99", teamId: "122924", role: "GM", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
 
-    // Function to calculate draft round
-    function calculateDraftRound(draftPick, teamsPerRound = 14) {
-        if (typeof draftPick !== 'number' || draftPick < 0) { // Allow pick 0
-            return null;
-        }
-        if (draftPick === 0) return 1; // Special case for pick 0 if it implies first round
-        return Math.ceil(draftPick / teamsPerRound);
+    // VVHL Hangry Moose (ID: "177596")
+    { name: "CraveDogg", playerId: "PLAYERID_CraveDogg", teamId: "177596", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 1, role: null, isECU: false, twitch: null },
+    { name: "Mayers", playerId: "PLAYERID_Mayers", teamId: "177596", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 23, role: null, isECU: false, twitch: null },
+    { name: "Ogrewhelmedd", playerId: "PLAYERID_Ogrewhelmedd", teamId: "177596", primaryPosition: "G", secondaryPosition: "D", goaliePreference: "full time", draftPick: 34, role: null, isECU: false, twitch: null },
+    { name: "jean gameboy", playerId: "PLAYERID_jean_gameboy", teamId: "177596", primaryPosition: "D", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 56, role: null, isECU: false, twitch: null }, // Reconciled name
+    { name: "GSPOT", playerId: "PLAYERID_GSPOT", teamId: "177596", primaryPosition: "D", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 62, role: null, isECU: false, twitch: null },
+    { name: "HardLukCHAMPION", playerId: "PLAYERID_HardLukCHAMPION", teamId: "177596", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "part time", draftPick: 84, role: null, isECU: false, twitch: null },
+    { name: "Squad86lemm", playerId: "PLAYERID_Squad86lemm", teamId: "177596", role: "Owner", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
+    { name: "BigTRUCK20", playerId: "PLAYERID_BigTRUCK20", teamId: "177596", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK IF APPLICABLE */, draftRound: null, role: "GM", isECU: false, twitch: null }, // Merged role
+
+    // VVHL Himmytown Huskies (ID: "124443")
+    { name: "CoronadoJ89", playerId: "PLAYERID_CoronadoJ89", teamId: "124443", primaryPosition: "G", secondaryPosition: "G", goaliePreference: "full time", draftPick: 11, role: null, isECU: false, twitch: null },
+    { name: "hawks8502", playerId: "PLAYERID_hawks8502", teamId: "124443", primaryPosition: "G", secondaryPosition: "W", goaliePreference: "full time", draftPick: 18, role: null, isECU: false, twitch: null },
+    { name: "Rielly i44i", playerId: "PLAYERID_Rielly_i44i", teamId: "124443", primaryPosition: "D", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 39, role: null, isECU: false, twitch: null },
+    { name: "Thatmanj1011", playerId: "PLAYERID_Thatmanj1011", teamId: "124443", primaryPosition: "D", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 46, role: null, isECU: false, twitch: null },
+    { name: "I Brew l", playerId: "PLAYERID_I_Brew_l", teamId: "124443", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 67, role: null, isECU: false, twitch: null }, // Also GM in teamsData
+    { name: "DBC11", playerId: "PLAYERID_DBC11", teamId: "124443", primaryPosition: "D", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 74, role: null, isECU: false, twitch: null },
+    { name: "Taylz7", playerId: "PLAYERID_Taylz7", teamId: "124443", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "Owner", isECU: false, twitch: null }, // Assuming Taylz7 is тαуℓz7, reconciled role
+    { name: "EKMetal", playerId: "PLAYERID_EKMetal", teamId: "124443", role: "GM", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
+
+    // VVHL Lost Boys (ID: "192462")
+    { name: "mowsky2", playerId: "PLAYERID_mowsky2", teamId: "192462", primaryPosition: "D", secondaryPosition: "W", goaliePreference: "part time", draftPick: 6, role: null, isECU: false, twitch: null },
+    { name: "XxaviiatorxX", playerId: "PLAYERID_XxaviiatorxX", teamId: "192462", primaryPosition: "G", secondaryPosition: "D", goaliePreference: "full time", draftPick: 28, role: null, isECU: false, twitch: null },
+    { name: "BosGamesTV", playerId: "PLAYERID_BosGamesTV", teamId: "192462", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 29, role: null, isECU: false, twitch: null },
+    { name: "Rifle Drum", playerId: "PLAYERID_Rifle_Drum", teamId: "192462", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 51, role: null, isECU: false, twitch: null },
+    { name: "Kanner889639", playerId: "PLAYERID_Kanner889639", teamId: "192462", primaryPosition: "D", secondaryPosition: "W", goaliePreference: "full time", draftPick: 57, role: null, isECU: false, twitch: null },
+    { name: "ARMYabnVETe9", playerId: "PLAYERID_ARMYabnVETe9", teamId: "192462", primaryPosition: "C", secondaryPosition: "D", goaliePreference: "part time", draftPick: 79, role: null, isECU: false, twitch: null },
+    { name: "SuPeRmArIoTa15", playerId: "PLAYERID_SuPeRmArIoTa15", teamId: "192462", primaryPosition: "G", secondaryPosition: null, goaliePreference: "full time", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "Owner", isECU: false, twitch: null },
+    { name: "Theone-iso", playerId: "PLAYERID_Theone-iso", teamId: "192462", role: "GM", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
+
+    // VVHL Philly Cheeseskates (ID: "148983")
+    { name: "Dandi Randy", playerId: "PLAYERID_Dandi_Randy", teamId: "148983", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "part time", draftPick: 5, role: null, isECU: false, twitch: null },
+    { name: "HighbornPigeon", playerId: "PLAYERID_HighbornPigeon", teamId: "148983", primaryPosition: "G", secondaryPosition: "G", goaliePreference: "full time", draftPick: 24, role: null, isECU: false, twitch: null },
+    { name: "C0FFEE T1ME", playerId: "PLAYERID_C0FFEE_T1ME", teamId: "148983", primaryPosition: "D", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 33, role: null, isECU: false, twitch: null },
+    { name: "M Diesel57", playerId: "PLAYERID_M_Diesel57", teamId: "148983", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "part time", draftPick: 52, role: null, isECU: false, twitch: null },
+    { name: "Spychopaht", playerId: "PLAYERID_Spychopaht", teamId: "148983", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 61, role: null, isECU: false, twitch: null },
+    { name: "Cappickle7288", playerId: "PLAYERID_Cappickle7288", teamId: "148983", primaryPosition: "D", secondaryPosition: "G", goaliePreference: "full time", draftPick: 80, role: null, isECU: false, twitch: null },
+    { name: "SadAttorney", playerId: "PLAYERID_SadAttorney", teamId: "148983", role: "Owner", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
+    { name: "GwHitTs MF", playerId: "PLAYERID_GwHitTs_MF", teamId: "148983", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "GM", isECU: false, twitch: null },
+
+    // VVHL Sewer Kings (ID: "195310")
+    { name: "WAXPOETlC", playerId: "PLAYERID_WAXPOETlC", teamId: "195310", primaryPosition: "D", secondaryPosition: "G", goaliePreference: "part time", draftPick: 13, role: null, isECU: false, twitch: null }, // Reconciled name
+    { name: "RosePetalKiller", playerId: "PLAYERID_RosePetalKiller", teamId: "195310", primaryPosition: "G", secondaryPosition: "G", goaliePreference: "full time", draftPick: 16, role: null, isECU: false, twitch: null },
+    { name: "BackBlastDan", playerId: "PLAYERID_BackBlastDan", teamId: "195310", primaryPosition: "D", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 41, role: null, isECU: false, twitch: null },
+    { name: "Whistlingcloud6", playerId: "PLAYERID_Whistlingcloud6", teamId: "195310", primaryPosition: "C", secondaryPosition: "G", goaliePreference: "full time", draftPick: 44, role: null, isECU: false, twitch: null },
+    { name: "Maximus6684", playerId: "PLAYERID_Maximus6684", teamId: "195310", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 69, role: null, isECU: false, twitch: null },
+    { name: "ScubDaddyX69", playerId: "PLAYERID_ScubDaddyX69", teamId: "195310", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 72, role: null, isECU: false, twitch: null },
+    { name: "lXlBMac24lXl", playerId: "PLAYERID_lXlBMac24lXl", teamId: "195310", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "Owner", isECU: false, twitch: null }, // Reconciled name
+    { name: "showstopr87", playerId: "PLAYERID_showstopr87", teamId: "195310", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "GM", isECU: false, twitch: null },
+
+    // VVHL Sicilian Slicers (ID: "2411")
+    { name: "The Wool Tunic", playerId: "PLAYERID_The_Wool_Tunic", teamId: "2411", primaryPosition: "G", secondaryPosition: "W", goaliePreference: "part time", draftPick: 7, role: null, isECU: false, twitch: null },
+    { name: "Moeeeexoxo", playerId: "PLAYERID_Moeeeexoxo", teamId: "2411", primaryPosition: "G", secondaryPosition: "G", goaliePreference: "full time", draftPick: 22, role: null, isECU: false, twitch: null },
+    { name: "Hatfieldkid85", playerId: "PLAYERID_Hatfieldkid85", teamId: "2411", primaryPosition: "D", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 35, role: null, isECU: false, twitch: null },
+    { name: "master collier", playerId: "PLAYERID_master_collier", teamId: "2411", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "part time", draftPick: 50, role: null, isECU: false, twitch: null },
+    { name: "Swollymammoth84", playerId: "PLAYERID_Swollymammoth84", teamId: "2411", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 63, role: null, isECU: false, twitch: null },
+    { name: "Pattykaner33", playerId: "PLAYERID_Pattykaner33", teamId: "2411", primaryPosition: "C", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 78, role: null, isECU: false, twitch: null },
+    { name: "x3xhoagiex0x", playerId: "PLAYERID_x3xhoagiex0x", teamId: "2411", role: "Owner", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
+    { name: "Buckneison", playerId: "PLAYERID_Buckneison", teamId: "2411", primaryPosition: "D", secondaryPosition: null, goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "GM", isECU: false, twitch: null },
+
+    // VVHL Southbeach Snipers (ID: "197685")
+    { name: "GhostColeton", playerId: "PLAYERID_GhostColeton", teamId: "197685", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "part time", draftPick: 14, role: null, isECU: false, twitch: null },
+    { name: "mxwto", playerId: "PLAYERID_mxwto", teamId: "197685", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 15, role: null, isECU: false, twitch: null },
+    { name: "MrClutchCookie", playerId: "PLAYERID_MrClutchCookie", teamId: "197685", primaryPosition: "G", secondaryPosition: "D", goaliePreference: "full time", draftPick: 30, role: null, isECU: false, twitch: null },
+    { name: "Jmen Fish7822", playerId: "PLAYERID_Jmen_Fish7822", teamId: "197685", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 43, role: null, isECU: false, twitch: null }, // Reconciled name
+    { name: "nmanning709", playerId: "PLAYERID_nmanning709", teamId: "197685", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 71, role: null, isECU: false, twitch: null },
+    { name: "ShadyReaper242", playerId: "PLAYERID_ShadyReaper242", teamId: "197685", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 83, role: null, isECU: false, twitch: null },
+    { name: "oi Caustic", playerId: "PLAYERID_oi_Caustic", teamId: "197685", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "Owner", isECU: false, twitch: null },
+    { name: "Biz l16l", playerId: "PLAYERID_Biz_l16l", teamId: "197685", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "GM", isECU: false, twitch: null }, // Reconciled name
+
+    // VVHL Tampa Bay Tribe (ID: "24504")
+    { name: "xZainer89", playerId: "PLAYERID_xZainer89", teamId: "24504", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 3, role: null, isECU: false, twitch: null },
+    { name: "Schielf35", playerId: "PLAYERID_Schielf35", teamId: "24504", primaryPosition: "W", secondaryPosition: "G", goaliePreference: "no goalie", draftPick: 26, role: null, isECU: false, twitch: null }, // Ensure this isn't an Owner/GM if names overlap
+    { name: "YoYoHockey101", playerId: "PLAYERID_YoYoHockey101", teamId: "24504", primaryPosition: "G", secondaryPosition: "W", goaliePreference: "full time", draftPick: 31, role: null, isECU: false, twitch: null }, // Reconciled name
+    { name: "Xephyreous", playerId: "PLAYERID_Xephyreous", teamId: "24504", primaryPosition: "C", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 54, role: null, isECU: false, twitch: null },
+    { name: "BooyahAchieved7", playerId: "PLAYERID_BooyahAchieved7", teamId: "24504", primaryPosition: "D", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 59, role: null, isECU: false, twitch: null },
+    { name: "IBiggy OtisI", playerId: "PLAYERID_IBiggy_OtisI", teamId: "24504", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 0, role: null, isECU: false, twitch: null },
+    { name: "JG813", playerId: "PLAYERID_JG813", teamId: "24504", primaryPosition: "D", secondaryPosition: null, goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "Owner", isECU: false, twitch: null }, // Assuming JG (Owner) is JG813
+    { name: "MikeyPT4899", playerId: "PLAYERID_MikeyPT4899", teamId: "24504", primaryPosition: "C", secondaryPosition: null, goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "GM", isECU: false, twitch: null }, // Assuming MikeyPT (GM) is MikeyPT4899
+
+    // VVHL Bravehearts (ID: "195791")
+    { name: "The Mobski", playerId: "PLAYERID_The_Mobski", teamId: "195791", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "part time", draftPick: 12, role: null, isECU: false, twitch: null },
+    { name: "Jam-16-mac", playerId: "PLAYERID_Jam-16-mac", teamId: "195791", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 17, role: null, isECU: false, twitch: null },
+    { name: "MediocreClient", playerId: "PLAYERID_MediocreClient", teamId: "195791", primaryPosition: "G", secondaryPosition: "D", goaliePreference: "full time", draftPick: 40, role: null, isECU: false, twitch: null }, // Reconciled name
+    { name: "Silkysenko91", playerId: "PLAYERID_Silkysenko91", teamId: "195791", primaryPosition: "D", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 45, role: null, isECU: false, twitch: null },
+    { name: "xMinglewood", playerId: "PLAYERID_xMinglewood", teamId: "195791", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: 68, role: null, isECU: false, twitch: null },
+    { name: "KDEETER1313", playerId: "PLAYERID_KDEETER1313", teamId: "195791", primaryPosition: "D", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 73, role: null, isECU: false, twitch: null }, // Reconciled name
+    { name: "T8kEITEzZz", playerId: "PLAYERID_T8kEITEzZz", teamId: "195791", role: "Owner", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null },
+    { name: "ItsJayno", playerId: "PLAYERID_ItsJayno", teamId: "195791", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "GM", isECU: false, twitch: null }, // Assuming ItsJayno is Jayno780
+
+    // VVHL Degenerates (ID: "192189")
+    { name: "Seanahue99", playerId: "PLAYERID_Seanahue99", teamId: "192189", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 10, role: null, isECU: false, twitch: null },
+    { name: "Gritty028", playerId: "PLAYERID_Gritty028", teamId: "192189", primaryPosition: "G", secondaryPosition: "D", goaliePreference: "full time", draftPick: 19, role: null, isECU: false, twitch: null },
+    { name: "Battle Roaron", playerId: "PLAYERID_Battle_Roaron", teamId: "192189", primaryPosition: "G", secondaryPosition: "W", goaliePreference: "full time", draftPick: 38, role: null, isECU: false, twitch: null }, // Reconciled name
+    { name: "tmazur1478", playerId: "PLAYERID_tmazur1478", teamId: "192189", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 47, role: null, isECU: false, twitch: null },
+    { name: "John Hancokk", playerId: "PLAYERID_John_Hancokk", teamId: "192189", primaryPosition: "C", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 66, role: null, isECU: false, twitch: null },
+    { name: "xXMaroon88Xx", playerId: "PLAYERID_xXMaroon88Xx", teamId: "192189", primaryPosition: "W", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 75, role: null, isECU: false, twitch: null },
+    { name: "MarkyMarccc", playerId: "PLAYERID_MarkyMarccc", teamId: "192189", primaryPosition: "W", secondaryPosition: "C", goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "Owner", isECU: false, twitch: null },
+    { name: "NotLuigi420", playerId: "PLAYERID_NotLuigi420", teamId: "192189", primaryPosition: "D", secondaryPosition: null, goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "GM", isECU: false, twitch: null },
+
+    // VVHL Portage Moneyshots (ID: "109941")
+    { name: "ItsaMeAquino", playerId: "PLAYERID_ItsaMeAquino", teamId: "109941", primaryPosition: "G", secondaryPosition: "G", goaliePreference: "full time", draftPick: 9, role: null, isECU: false, twitch: null },
+    { name: "Nate_farms", playerId: "PLAYERID_Nate_farms", teamId: "109941", primaryPosition: "D", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 20, role: null, isECU: false, twitch: null },
+    { name: "NitroQc x 10", playerId: "PLAYERID_NitroQc_x_10", teamId: "109941", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "part time", draftPick: 37, role: null, isECU: false, twitch: null },
+    { name: "Webber1786", playerId: "PLAYERID_Webber1786", teamId: "109941", primaryPosition: "W", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: 82, role: null, isECU: false, twitch: null },
+    { name: "PSYCHO-_-CLOWN88", playerId: "PLAYERID_PSYCHO-_-CLOWN88", teamId: "109941", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 65, role: null, isECU: false, twitch: null }, // Reconciled name
+    { name: "Ribeye83", playerId: "PLAYERID_Ribeye83", teamId: "109941", primaryPosition: "W", secondaryPosition: "D", goaliePreference: "no goalie", draftPick: 76, role: null, isECU: false, twitch: null },
+    { name: "Jessejen", playerId: "PLAYERID_Jessejen", teamId: "109941", primaryPosition: "C", secondaryPosition: "W", goaliePreference: "no goalie", draftPick: null /* CHECK DRAFT PICK */, draftRound: null, role: "Owner", isECU: false, twitch: null },
+    { name: "Shockedust", playerId: "PLAYERID_Shockedust", teamId: "109941", role: "GM", primaryPosition: null, secondaryPosition: null, goaliePreference: "no goalie", draftPick: null, draftRound: null, isECU: false, twitch: null }
+];
+
+// Function to calculate draft round
+function calculateDraftRound(draftPick, teamsPerRound = 14) {
+    if (typeof draftPick !== 'number' || draftPick < 0) {
+        return null;
     }
+    if (draftPick === 0) return 1; // Assuming pick 0 is effectively a first-round (or pre-draft) equivalent
+    return Math.ceil(draftPick / teamsPerRound);
+}
 
-    // Update draft rounds for players who have a numerical draftPick
-    staticPlayersData = staticPlayersData.map(player => {
-        if (typeof player.draftPick === 'number') {
-            player.draftRound = calculateDraftRound(player.draftPick);
-        }
-        return player;
-    });
+// Update draft rounds for players who have a numerical draftPick
+staticPlayersData = staticPlayersData.map(player => {
+    if (typeof player.draftPick === 'number') { // Also calculates for pick 0
+        player.draftRound = calculateDraftRound(player.draftPick);
+    }
+    // if player.draftPick is "ECU" or null, player.draftRound remains null (or as previously set for O/GMs)
+    return player;
+});
 
 
     // --- GOOGLE SHEET URLs (REPLACE WITH YOUR ACTUAL PUBLISHED CSV URLs) ---
